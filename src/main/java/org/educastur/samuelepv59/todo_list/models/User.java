@@ -9,43 +9,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * @Data: Genera Getters, Setters, toString, equals y hashCode.
- *        Ahorra código repetitivo (Boilerplate).
- */
-@Data
-
-/**
- * @NoArgsConstructor: Constructor sin argumentos. JPA lo necesita para
- *                     crear la instancia antes de rellenarla con datos de la
- *                     BD.
- */
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
-
-/**
- * @AllArgsConstructor: Constructor con todos los campos.
- *                      Es obligatorio si usas @Builder.
- */
 @AllArgsConstructor
-
-/**
- * @Builder: Permite crear objetos de forma fluida:
- *           User.builder().name("X").build().
- *           Alternativa: Usar constructores manuales o Setters tradicionales.
- */
 @Builder
-
-/**
- * @Entity: Marca esta clase como una tabla de base de datos.
- */
 @Entity
-
-/**
- * @Table: Define el nombre de la tabla.
- *         Usamos "user_entity" porque "USER" es palabra reservada en
- *         H2/Postgres.
- *         Opción: Podrías usar @Table(name = "usuarios_sistema").
- */
 @Table(name = "user_entity")
 public class User implements UserDetails {
 
