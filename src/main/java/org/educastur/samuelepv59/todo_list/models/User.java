@@ -46,8 +46,9 @@ public class User implements UserDetails {
      * @Builder.Default: Evita que al usar el Builder, este campo sea null.
      *                   Aquí inicializamos a false por defecto.
      */
+    @Enumerated(EnumType.STRING)
     @Builder.Default
-    private boolean isAdmin = false;
+    private UserRole Rol = UserRole.USER;
 
     // --- MÉTODOS DE USERDETAILS (Spring Security) ---
 
@@ -57,8 +58,9 @@ public class User implements UserDetails {
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        String role = isAdmin ? "ROLE_ADMIN" : "ROLE_USER";
-        return List.of(new SimpleGrantedAuthority(role));
+        //String role = Rol ? UserRole.ADMIN : UserRole.USER;
+        //return List.of(new SimpleGrantedAuthority(role));
+        return null;
     }
 
     /**
