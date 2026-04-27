@@ -2,13 +2,11 @@ package org.educastur.samuelepv59.todo_list.models;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
-
+/**
+ * Entidad de Usuario simplificada.
+ * Hemos eliminado 'implements UserDetails' porque ya no usamos Spring Security.
+ */
 @Getter
 @Setter
 @ToString
@@ -17,73 +15,22 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "user_entity")
-public class User implements UserDetails {
+public class User {
 
-    /**
-     * @Id: Define la clave primaria.
-     * @GeneratedValue: El motor (H2) genera el número solo (1, 2, 3...).
-     *                  Otras opciones: GenerationType.UUID si prefieres IDs tipo
-     *                  "abc-123-efg".
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /**
-     * @Column(unique = true): Evita que dos personas tengan el mismo username.
-     */
     @Column(unique = true, nullable = false)
     private String username;
 
     private String email;
 
-    /**
-     * En producción, esta password SIEMPRE debe guardarse encriptada (BCrypt).
-     */
+    // Ahora guardaremos la contraseña en texto plano para tus pruebas locales
     private String password;
 
-    /**
-     * @Builder.Default: Evita que al usar el Builder, este campo sea null.
-     *                   Aquí inicializamos a false por defecto.
-     */
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private UserRole Rol = UserRole.USER;
-
-    // --- MÉTODOS DE USERDETAILS (Spring Security) ---
-
-    /**
-     * getAuthorities: Define los "permisos" del usuario.
-     * Spring Security espera que los roles empiecen por "ROLE_".
-     */
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        //String role = Rol ? UserRole.ADMIN : UserRole.USER;
-        //return List.of(new SimpleGrantedAuthority(role));
-        return null;
-    }
-
-    /**
-     * Estos 4 métodos suelen devolverse como 'true' en desarrollos rápidos.
-     * Si quisieras bloquear a alguien, cambiarías 'isEnabled' a false.
-     */
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+    private UserRole rol = UserRole.USER;
+    // Nota: He cambiado 'Rol' por 'role' (minúscula) que es la convención en Java
 }
